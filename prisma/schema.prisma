@@ -12,3 +12,36 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id       String        @id @default(uuid())
+  username String        @unique
+  password String
+  groups   GroupMember[]
+  messages Message[]
+}
+
+model Group {
+  id       String        @id @default(uuid())
+  name     String
+  members  GroupMember[]
+  messages Message[]
+}
+
+model GroupMember {
+  id      String @id @default(uuid())
+  userId  String
+  groupId String
+  user    User   @relation(fields: [userId], references: [id])
+  group   Group  @relation(fields: [groupId], references: [id])
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  content   String
+  senderId  String
+  groupId   String?
+  sender    User     @relation(fields: [senderId], references: [id])
+  group     Group?   @relation(fields: [groupId], references: [id])
+  createdAt DateTime @default(now())
+}
