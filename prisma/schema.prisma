@@ -14,11 +14,14 @@ datasource db {
 }
 
 model User {
-  id       String        @id @default(uuid())
-  username String        @unique
-  password String
-  groups   GroupMember[]
-  messages Message[]
+  id             String        @id @default(uuid())
+  displayName    String
+  email          String        @unique
+  username       String        @unique
+  mailIsVerified Boolean       @default(false)
+  password       String
+  groups         GroupMember[]
+  messages       Message[]
 }
 
 model Group {
