@@ -18,6 +18,7 @@ model User {
   displayName    String
   email          String        @unique
   username       String        @unique
+  createdAt      DateTime      @default(now())
   mailIsVerified Boolean       @default(false)
   password       String
   groups         GroupMember[]

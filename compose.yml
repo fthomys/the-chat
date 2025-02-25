@@ -14,7 +14,7 @@ services:
       retries: 5
       start_period: 60s
     volumes:
-      - /tmp/chat_database_data:/var/lib/postgresql/data:rw
+      - chat_database_data:/var/lib/postgresql/data:rw
   the-chat-minio:
     image: quay.io/minio/minio:RELEASE.2025-02-07T23-21-09Z
     ports:
@@ -25,7 +25,7 @@ services:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER:-admin}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-!ChangeMe!}
     volumes:
-      - /tmp/chat_minio_data:/data
+      - chat_minio_data:/data
     command: server /data --console-address ":9001"
     healthcheck:
       test: [ "CMD", "mc", "ready", "local" ]
@@ -33,5 +33,5 @@ services:
       timeout: 5s
       retries: 5
 volumes:
-  database_data:
-  minio_data:
+  chat_database_data:
+  chat_minio_data:
