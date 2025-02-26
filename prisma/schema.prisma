@@ -23,6 +23,8 @@ model User {
   password       String
   groups         GroupMember[]
   messages       Message[]
+
+  Session Session[]
 }
 
 model Group {
@@ -48,4 +50,15 @@ model Message {
   sender    User     @relation(fields: [senderId], references: [id])
   group     Group?   @relation(fields: [groupId], references: [id])
   createdAt DateTime @default(now())
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  token     String   @unique
+  useragent String
+  ip        String
+  createdAt DateTime @default(now())
+  expiresAt DateTime
 }

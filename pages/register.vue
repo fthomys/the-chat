@@ -58,7 +58,7 @@ const handleRegister = async () => {
   try {
     const { data, error } = await useFetch("/api/register", {
       method: "POST",
-      body: form,
+      body: JSON.stringify(form),
     });
 
     if (error.value) {
@@ -83,6 +83,7 @@ const handleRegister = async () => {
       }
     } else {
       console.log("Successfully registered:", data.value);
+      Navigator.push("/app");
     }
   } catch {
     apiErrors.general = "Network error, please try again later.";
@@ -90,6 +91,7 @@ const handleRegister = async () => {
     loading.value = false;
   }
 };
+
 
 
 </script>
