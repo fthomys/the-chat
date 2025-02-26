@@ -32,6 +32,25 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+  the-chat-valkey:
+    image: valkey/valkey:latest
+    env_file: .env
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - chat_valkey_data:/data
+    # - ./valkey.conf:/etc/valkey/valkey.conf
+    command: ["valkey-server", "--requirepass", "${VALKEY_PASSWORD:-!ChangeMe!}"]
+    environment:
+      - VALKEY_PASSWORD=${VALKEY_PASSWORD:-!ChangeMe!}
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 volumes:
   chat_database_data:
   chat_minio_data:
+  chat_redis_data:
+  chat_valkey_data:

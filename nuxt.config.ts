@@ -11,5 +11,9 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-})
-
+  runtimeConfig: {
+    redisHost: process.env.VALKEY_HOST as string,
+    redisPort: process.env.VALKEY_PORT as string,
+    redisPassword: process.env.VALKEY_PASSWORD as string,
+  } satisfies { redisHost: string; redisPort: string; redisPassword: string; },
+});
